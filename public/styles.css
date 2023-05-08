@@ -1,8 +1,23 @@
-#resultado {
-    margin-top: 20px;
-  }
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+}
 
-#grafo{
-    background-color: aqua;
-    border: 2px solid black;
+h1, h2, h3 {
+  font-weight: 700;
+}
+
+hr {
+  border-top: 3px solid #ccc;
+}
+
+.container {
+  max-width: 900px;
+  margin: auto;
+}
+
+#graph {
+  height: 600px;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px #ccc;
 }

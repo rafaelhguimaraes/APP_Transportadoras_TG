@@ -1,17 +1,31 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Fluxo máximo em redes com Ford-Fulkerson</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.css" rel="stylesheet" type="text/css" />
-  <link rel="stylesheet" href="public/styles.css">
-</head>
-<body>
-  <h1>Fluxo máximo em redes com Ford-Fulkerson</h1>
-  <div id="grafo" style="width: 600px; height: 400px;"></div>
-  <div id="resultado"></div>
-  <script src="script.js"></script>
-</body>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Trabalho de TG - Transportadora</title>
+
+    <!-- Bootstrap CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/vis-network@9.0.2/dist/vis-network.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container mt-4">
+      <h1>Trabalho de TG - Transportadora</h1>
+      <hr>
+      <h3>Mapa de transporte entre 10 cidades de Minas Gerais</h3>
+      <div id="graph"></div>
+    </div>
+
+    <!-- Biblioteca Vis.js -->
+    <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+
+    <!-- Script para plotar o grafo -->
+    <script type="text/javascript" src="script.js"></script>
+  </body>
 </html>
