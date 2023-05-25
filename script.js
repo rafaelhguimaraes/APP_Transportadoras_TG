@@ -39,7 +39,7 @@ var options = {
     length: 300,
   },
   physics: {
-    enabled: true,
+    enabled: false  ,
   },
 };
 
@@ -74,7 +74,7 @@ network.on('select', function (params) {
 function findAugmentingPath(source, sink) {
   // Inicializa o caminho com o nó fonte
   let path = [source];
-
+  console.log(path)
   // Inicializa o conjunto de nós visitados
   let visited = new Set([source]);
 
@@ -113,7 +113,7 @@ function findAugmentingPath(source, sink) {
   return null;
 }
 
-    function fordFulkerson(source, sink) {
+function fordFulkerson(graph, source, sink) {
       // Inicializa o fluxo como zero
       let maxFlow = 0;
     
@@ -164,11 +164,14 @@ function findAugmentingPath(source, sink) {
       return maxFlow;
     }
 
-console.log(findAugmentingPath(1,5))
-console.log(findAugmentingPath(2,3))
-console.log(findAugmentingPath(3,5))
-console.log(findAugmentingPath(4,5))
-console.log(fordFulkerson(1,5))
-console.log(fordFulkerson(1,2))
-console.log(fordFulkerson(1,3))
-console.log(fordFulkerson(1,4))
+// console.log(findAugmentingPath(1,5))
+//  let bh = nodes[1]
+//  let contagem = nodes[2]
+//  console.log(bh)
+// console.log(findAugmentingPath(2,3))
+// console.log(findAugmentingPath(3,5))
+// console.log(findAugmentingPath(4,5))
+// //console.log(fordFulkerson(2,5))
+// //console.log(fordFulkerson(3,4))
+// //console.log(fordFulkerson(1,3))
+// //console.log(fordFulkerson(1,4))

@@ -21,3 +21,10 @@ hr {
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px #ccc;
 }
+
+#mynetwork{
+  height: 600px;
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px #ccc;
+}
