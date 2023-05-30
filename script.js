@@ -27,7 +27,7 @@ function grafo_principal(source, target){
     var ff = new jsgraphs.FordFulkerson(g, source, target);
     console.log('Fluxo Máximo: ' + ff.value);
     let fluxoMaximo = ff.value;
-    let texto = `O Fluxo Máximo de carga é ${fluxoMaximo}`;
+    let texto = `O Fluxo Máximo de carga é de ${fluxoMaximo} kg`;
     let elemento = document.getElementById('fluxo-maximo');
     elemento.textContent = texto;
     var minCut = ff.minCut(g);
@@ -114,7 +114,5 @@ function atualizarSource() {
   var target = parseInt(selectElement.value);
   grafo_principal(source,target);
 }
-
-
 
 grafo_principal(0,0);

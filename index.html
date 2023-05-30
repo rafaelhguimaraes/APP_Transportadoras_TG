@@ -1,66 +1,61 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Trabalho de TG - Transportadora</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabalho de TG - Transportadora</title>
 
-    <!-- Bootstrap CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="public/styles.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/vis-network@9.0.2/dist/vis-network.min.js"></script>
-    <script src="js-graphs.js"></script>
-    <!-- Biblioteca jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="public/styles.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/vis-network@9.0.2/dist/vis-network.min.js"></script>
+  <script src="js-graphs.js"></script>
+</head>
 
-    <!-- Biblioteca Moment.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<body>
+  <div class="container mt-4">
+    <h2 class="text-center text-primary">Trabalho de TG - Transportadora</h2>
 
-  </head>
-
-  <body>
-    <div class="container mt-4">
-      <h1>Trabalho de TG - Transportadora</h1>
-      <hr>
-      <h2 id="fluxo-maximo">Aqui</h2>
-      <label for="select-source">Source:</label>
-      <select id="select-source">
+    <hr>    
+    <br>
+    <h3 class="text-center">Mapa de transporte entre cidades de Minas Gerais</h3>
+    <div id="rota-selector"></div>
+    <div class="row">
+      <div class="col-md-6">
+        <label for="select-source">Source:</label>
+        <select id="select-source" class="form-control">
           <option value="0">Belo Horizonte</option>
           <option value="1">Contagem</option>
           <option value="2">Betim</option>
           <option value="3">Uberlândia</option>
           <option value="4">Uberaba</option>
-      </select>
-
-      <label for="select-target">Target:</label>
-      <select id="select-target">
-          <option value="0">Belo Horizonte</option>
-          <option value="1">Contagem</option>
-          <option value="2">Betim</option>
-          <option value="3">Uberlândia</option>
-          <option value="4">Uberaba</option>
-      </select>
-
-      <button class="alert alert-primary" onclick="atualizarSource()">Calcular Fluxo Máx</button>
-
-      <h3>Mapa de transporte entre cidades de Minas Gerais</h3>
-      <div id="rota-selector">
+        </select>
       </div>
-      <div id="mynetwork"></div>
-      
-  
-      
-        <script src="script.js"></script>
+      <div class="col-md-6">
+        <label for="select-target">Target:</label>
+        <select id="select-target" class="form-control">
+          <option value="0">Belo Horizonte</option>
+          <option value="1">Contagem</option>
+          <option value="2">Betim</option>
+          <option value="3">Uberlândia</option>
+          <option value="4">Uberaba</option>
+        </select>
+      </div>
     </div>
+    <br>
+    <h2 id="fluxo-maximo" class="text-center">Aqui</h2>
 
-    <!-- Biblioteca Vis.js -->
-    <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+    <div class="text-center ">
+        <button class="btn btn-primary mt-3" onclick="atualizarSource()">Calcular Fluxo Máximo</button>
+    </div>
+    <div id="mynetwork"></div>
+  </div>
 
-
-    
-  
-  </body>
+  <!-- Biblioteca Vis.js -->
+  <script type="text/javascript" src="https://visjs.github.io/vis-network/standalone/umd/vis-network.min.js"></script>
+  <script src="script.js"></script>
+</body>
 </html>

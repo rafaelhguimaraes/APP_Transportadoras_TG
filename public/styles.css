@@ -20,11 +20,21 @@ hr {
   margin-top: 30px;
   border: 1px solid #ccc;
   box-shadow: 2px 2px 5px #ccc;
+  background-color: aqua;
 }
 
 #mynetwork{
   height: 600px;
   margin-top: 30px;
-  border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px #ccc;
+  border: 1px solid #000000;
+  box-shadow: 2px 2px 5px #030303;
+  background-color: rgb(255, 254, 254);
+}
+
+body {
+  background-color: #abbdb8; /* Define a cor de fundo */
+}
+
+select.form-control {
+  font-size: 12px; /* Define o tamanho da fonte dos menus */
 }
