@@ -34,10 +34,7 @@
           <option value="3">Uberlândia</option>
           <option value="4">Uberaba</option>
       </select>
-      <h3>Mapa de transporte entre cidades de Minas Gerais</h3>
-      <div id="mynetwork"></div>
-      
-  
+
       <label for="select-target">Target:</label>
       <select id="select-target">
           <option value="0">Belo Horizonte</option>
@@ -46,6 +43,16 @@
           <option value="3">Uberlândia</option>
           <option value="4">Uberaba</option>
       </select>
+
+      <button class="alert alert-primary" onclick="atualizarSource()">Calcular Fluxo Máx</button>
+
+      <h3>Mapa de transporte entre cidades de Minas Gerais</h3>
+      <div id="rota-selector">
+      </div>
+      <div id="mynetwork"></div>
+      
+  
+      
         <script src="script.js"></script>
     </div>
 
