@@ -1,177 +1,126 @@
-// Nós do grafo
-let nodes = new vis.DataSet([
-  { id: 1, label: "Belo Horizonte" },
-  { id: 2, label: "Contagem" },
-  { id: 3, label: "Betim" },
-  { id: 4, label: "Uberlândia" },
-  { id: 5, label: "Uberaba" },
-]);
-// Arestas do grafo (Distância da rota, capacidade de transporte)
-var edges = new vis.DataSet([
-  { from: 1, to: 2, label: "20 km, 50 ton" },
-  { from: 1, to: 3, label: "31 km, 30 ton" },
-  { from: 2, to: 3, label: "23 km, 10 ton" },
-  { from: 2, to: 4, label: "523 km, 150 ton" },
-  { from: 3, to: 5, label: "444 km, 120 ton" },
-  { from: 4, to: 5, label: "90 km, 70 ton" },
-  { from: 5, to: 4, label: "90 km, 70 ton" },
-]);
-// Opções da visualização
-var options = {
-  clickToUse: false,
-  nodes: {
-    shape: "circle",
-    font: {
-      size: 18,
-      color: "#000000",
-    },
-    borderWidth: 2,
-  },
-  edges: {
-    font: {
-      size: 14,
-      color: "#000000",
-    },
-    width: 5,
-    arrows: {
-      to: { enabled: true, scaleFactor: 1, type: "arrow" },
-    },
-    length: 300,
-  },
-  physics: {
-    enabled: false  ,
-  },
-};
+function grafo_principal(){
+  var g = new jsgraphs.FlowNetwork(5);
+  g.addEdge(new jsgraphs.FlowEdge(0, 1, 30));
+  g.addEdge(new jsgraphs.FlowEdge(0, 2, 50));
+  g.addEdge(new jsgraphs.FlowEdge(2, 1, 10));
+  g.addEdge(new jsgraphs.FlowEdge(1, 3, 120));
+  g.addEdge(new jsgraphs.FlowEdge(2, 4, 150));
+  g.addEdge(new jsgraphs.FlowEdge(3, 4, 70));
+  g.addEdge(new jsgraphs.FlowEdge(4, 3, 70));
 
-// Criação do grafo
-var container = document.getElementById("graph");
 
-var data = {
-  nodes: nodes,
-  edges: edges,
-};
+  var source = 0;
+  var target = 3;
+  var ff = new jsgraphs.FordFulkerson(g, source, target);
+  console.log('Fluxo Máximo: ' + ff.value);
+  let fluxoMaximo = ff.value;
+  let texto = `O Fluxo Máximo de carga é ${fluxoMaximo}`;
+  let elemento = document.getElementById('fluxo-maximo');
+  elemento.textContent = texto;
+  var minCut = ff.minCut(g);
+  console.log('Printou?')
 
-var network = new vis.Network(container, data, options);
-
-network.on('select', function (params) {
-  if (params.nodes.length === 1) {
-    var selectedNode = params.nodes[0];
-    var node = nodes.get(selectedNode);
-    var degree = edges.get({
-      filter: function (edge) {
-        return edge.from === selectedNode || edge.to === selectedNode;
-      },
-      fields: ["label"],
-    });
-    alert(
-      "Nó selecionado: " + node.label + "\n" +
-      "Conexões: " + degree.length + "\n" +
-      "Detalhes: " + JSON.stringify(degree, null, 4)
-    );
+  var g_nodes = [];
+  var g_edges = [];
+  g.node(1).label = 'Belo Horizonte';
+  for(var v=0; v < g.V; ++v){
+      if(v == 0){
+          g.node(v).label = 'Belo Horizonte ' + v; 
+      }
+      else if(v == 1){
+          g.node(v).label = 'Contagem ' + v; 
+      }
+      else if(v == 2){
+          g.node(v).label = 'Betim ' + v; 
+      }
+      else if(v == 3){
+          g.node(v).label = 'Uberlândia' + v; 
+      }
+      else if(v == 4){
+          g.node(v).label = 'Uberaba ' + v; 
+      }
+      //g.node(v).label = 'Cidade ' + v; // assigned 'Node {v}' as label for node v
+      if(v == source) g.node(v).label = 'Belo Horizonte ' + v;
+      if(v == target) g.node(v).label = 'Uberaba ' + v;
+      g_nodes.push({
+         id: v,
+         label: g.node(v).label,
+         group: (v == source || v == target ? 2 : 5) 
+      });
   }
-});
-
-function findAugmentingPath(source, sink) {
-  // Inicializa o caminho com o nó fonte
-  let path = [source];
-  console.log(path)
-  // Inicializa o conjunto de nós visitados
-  let visited = new Set([source]);
-
-  // Inicializa a fila de busca
-  let queue = [source];
-
-  // Executa a busca em largura
-  while (queue.length > 0) {
-    let current = queue.shift();
-
-    // Adiciona o nó atual ao caminho
-    path.push(current);
-
-    // Busca por arestas com capacidade disponível
-    let availableEdges = edges.get({
-      filter: function(item) { // Verifica se a aresta ainda não foi visitada e se tem capacidade disponível
-        return !visited.has(item.to) && parseInt(item.label.split(", ")[1]) > parseInt(item.label.split(", ")[2]) && item.from === current;
-      }
-    });
-
-    // Adiciona os nós vizinhos à fila e ao caminho
-    for (let i = 0; i < availableEdges.length; i++) {
-      let neighbor = availableEdges[i].to;
-      queue.push(neighbor);
-      visited.add(neighbor);
-      path.push(neighbor);
-
-      // Se encontrou o nó de destino, retorna o caminho
-      if (neighbor === sink) {
-        return path;
-      }
-    }
+  
+  for(var i = 0; i < minCut.length; ++i) {
+      var e = minCut[i];
+      e.highlighted = true;
+      console.log('min-cut: (' + e.from() + ", " + e.to() + ')');
+      var v = e.from();
+      var w = e.to();
+      g_edges.push({
+          from: v,
+          to: w,
+          label: '' + e.flow + '/' + e.capacity,
+          arrows:'to',
+          color: '#ff0000'
+      });
   }
 
-  // Se não encontrou um caminho aumentante, retorna null
-  return null;
-}
+  
+  for(var v = 0; v < g.V; ++v) {
+      var adj_v = g.adj(v);
+      for(var i = 0; i < adj_v.length; ++i) {
+          var e = adj_v[i];
+          var w = e.other(v);
+          if(w != e.to()) continue;
+          if(e.highlighted) continue;
+          g_edges.push({
+              from: v,
+              to: w,
+              label: '' + e.flow + '/' + e.capacity,
+              arrows:'to'
+          });
+      };
+  }
 
-function fordFulkerson(graph, source, sink) {
-      // Inicializa o fluxo como zero
-      let maxFlow = 0;
-    
-      // Enquanto houver um caminho aumentante
-      let path = findAugmentingPath(source, sink);
-      while (path !== null) {
-        // Calcula a capacidade disponível no caminho aumentante
-        let minCapacity = Infinity;
-        for (let i = 0; i < path.length - 1; i++) {
-          let from = path[i];
-          let to = path[i+1];
-          let edge = edges.get({
-            filter: function(item) {
-              return item.from === from && item.to === to;
-            }
-          })[0];
-          let capacity = parseInt(edge.label.split(", ")[1]);
-          let flow = parseInt(edge.label.split(", ")[2]);
-          let remainingCapacity = capacity - flow;
-          if (remainingCapacity < minCapacity) {
-            minCapacity = remainingCapacity;
-          }
-        }
-    
-        // Atualiza o fluxo no caminho aumentante
-        for (let i = 0; i < path.length - 1; i++) {
-          let from = path[i];
-          let to = path[i+1];
-          let edge = edges.get({
-            filter: function(item) {
-              return item.from === from && item.to === to;
-            }
-          })[0];
-          let flow = parseInt(edge.label.split(", ")[2]);
-          let newFlow = flow + minCapacity;
-          edge.label = edge.label.split(", ")[0] + ", " + edge.label.split(", ")[1] + ", " + newFlow;
-          edges.update(edge);
-        }
-    
-        // Adiciona o fluxo encontrado ao fluxo máximo
-        maxFlow += minCapacity;
-    
-        // Busca por um novo caminho aumentante
-        path = findAugmentingPath(source, sink);
-      }
-    
-      // Retorna o fluxo máximo encontrado
-      return maxFlow;
-    }
+  console.log(g.V); // display 6, which is the number of vertices in g
+  console.log(g.adj(0)); // display [5, 1, 2], which is the adjacent list to vertex 0
+  
+  var nodes = new vis.DataSet(g_nodes);
 
-// console.log(findAugmentingPath(1,5))
-//  let bh = nodes[1]
-//  let contagem = nodes[2]
-//  console.log(bh)
-// console.log(findAugmentingPath(2,3))
-// console.log(findAugmentingPath(3,5))
-// console.log(findAugmentingPath(4,5))
-// //console.log(fordFulkerson(2,5))
-// //console.log(fordFulkerson(3,4))
-// //console.log(fordFulkerson(1,3))
-// //console.log(fordFulkerson(1,4))
+  // create an array with edges
+  var edges = new vis.DataSet(g_edges);
+
+  // create a network
+  var container = document.getElementById('mynetwork');
+  var data = {
+      nodes: nodes,
+      edges: edges
+  };
+  var options = {};
+  var network = new vis.Network(container, data, options);
+  // Seletor para escolher os valores de source e target
+  var selectSource = document.getElementById('select-source');
+  var selectTarget = document.getElementById('select-target');
+
+  // selectSource.addEventListener('change', function() {
+  //   source = parseInt(selectSource.value);
+  //   ff.compute(source, target);
+  // });
+
+  // selectTarget.addEventListener('change', function() {
+  //   target = parseInt(selectTarget.value);
+  //   ff.compute(source, target); ;
+  // });
+
+};
+
+grafo_principal();
+var selectElement = document.getElementById("select-source");
+  
+  // Adicionar um ouvinte de evento ao elemento select
+  selectElement.addEventListener("change", function() {
+    // Capturar o valor selecionado
+    var valorSelecionado = selectElement.value;
+    
+    // Exibir o valor selecionado no console
+    console.log(valorSelecionado);
+  });
