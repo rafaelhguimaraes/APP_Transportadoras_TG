@@ -1,6 +1,6 @@
 # Trabalho de TG - Transportadora
 ### Este projeto consiste em um mapa de transporte entre cidades de Minas Gerais, utilizando o algoritmo Ford-Fulkerson para calcular o fluxo máximo de carga entre duas cidades selecionadas pelo usuário.
-
+![Mapa de Transporte](imagem.png)
 ### Arquivos do projeto
 - index.html: Este arquivo contém a estrutura HTML da página, onde são importados os estilos CSS, as bibliotecas JavaScript necessárias (Bootstrap, jQuery, Popper.js, vis.js) e os scripts personalizados (script.js e js-graphs.js). Ele também possui os elementos da interface, como o seletor de cidades, o botão de cálculo do fluxo máximo e o contêiner para exibir o mapa de transporte.
 
